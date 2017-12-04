@@ -53,6 +53,7 @@ public class StorePicture extends Thread {
                     fileData = FileDetail.toByteArray(pathAName);
                     //存入到 环形队列中
                     demo.EnQueue(fileData);
+                    deleteFile(pathAName);
 //                    logger.log(Level.INFO, "3 已取到的图片编号为:" + countNameStart + ",图片的大小为:" + fileData.length / 1024 + "kb" + ",此时的队列大小为:" + demo.queueLength());
                 } catch (IOException ex) {
                     Logger.getLogger(StorePicture.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,6 +71,29 @@ public class StorePicture extends Thread {
             long endtime = System.currentTimeMillis();
             long costTime = (endtime - begintime);
 //            logger.log(Level.INFO, "成功获取一次图片所消耗的时间costTime:" + costTime);
+        }
+    }
+
+    /**
+     * 删除单个文件
+     *
+     * @param fileName 要删除的文件的文件名
+     * @return 单个文件删除成功返回true，否则返回false
+     */
+    public static boolean deleteFile(String fileName) {
+        File file = new File(fileName);
+        // 如果文件路径所对应的文件存在，并且是一个文件，则直接删除
+        if (file.exists() && file.isFile()) {
+            if (file.delete()) {
+//                System.out.println("删除单个文件" + fileName + "成功！");
+                return true;
+            } else {
+//                System.out.println("删除单个文件" + fileName + "失败！");
+                return false;
+            }
+        } else {
+//            System.out.println("删除单个文件失败：" + fileName + "不存在！");
+            return false;
         }
     }
 
