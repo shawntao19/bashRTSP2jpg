@@ -46,8 +46,8 @@ public class Lanucher {
         logger.log(Level.INFO, "log Link is innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\n");
 //        logger.log(Level.INFO, "Link is ****/////////////******:" + System.getProperty("user.dir"));
         if (args != null && args.length > 0) {
-           int appState = getAppState();
-            logger.log(Level.INFO, "Link is ****/////////////******:" + System.getProperty("user.dir"));
+            int appState = getAppState();
+            logger.log(Level.INFO, "State is:" + appState + ",Link is ****/////////////******:" + System.getProperty("user.dir"));
             switch (args[0]) {
                 case ARG_STATE:
                     if (appState == STATE_RUNNING) {
@@ -72,8 +72,6 @@ public class Lanucher {
 //                        IPCController ipc = new IPCController();
 //                        ipc.launch();
 
-                        logger.info("The app is started111111111111111111111111111!\n");
-
                         CeeRTSPTransportThread crt = new CeeRTSPTransportThread();
                         crt.start();
 
@@ -81,7 +79,8 @@ public class Lanucher {
                         gp.run();
 
                         logger.info("The app is started!\n");
-                        appState = STATE_RUNNING;
+//                        Lanucher.writeState(Lanucher.STATE_RUNNING);
+//                        appState = STATE_RUNNING;
                     } else {
                         logger.info("The app is running!");
                     }
@@ -92,10 +91,12 @@ public class Lanucher {
 
                         logger.info("The app is shutted!");
                         appState = STATE_STOP;
+//                        Lanucher.writeState(Lanucher.STATE_STOP);
                     } else {
-                        CeeRTSPTransportThread crt = new CeeRTSPTransportThread();
-                        crt.killPid();
+                        CeeRTSPTransportStopThread crts = new CeeRTSPTransportStopThread();
+                        crts.start();
                         logger.info("The app is already shut down!");
+//                        Lanucher.writeState(Lanucher.STATE_STOP);
                     }
                     break;
                 default:
