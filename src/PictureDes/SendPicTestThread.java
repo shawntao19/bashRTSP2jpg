@@ -31,6 +31,9 @@ public class SendPicTestThread extends Thread {
             byte[] pic = gp.getPic();
             if (pic != null) {
                 logger.info("***///:size:" + pic.length / 1024 + "kb,输出的新文件大小////////////");
+                long endtime = System.currentTimeMillis();
+                long costTime = (endtime - begintime);
+                logger.log(Level.INFO, "循环获取的costTime:" + costTime);
             } else {
                 try {
                     this.sleep(40);
@@ -38,9 +41,7 @@ public class SendPicTestThread extends Thread {
                     Logger.getLogger(SendPicTestThread.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            long endtime = System.currentTimeMillis();
-            long costTime = (endtime - begintime);
-            logger.log(Level.INFO, "循环获取的costTime:" + costTime);
+
         }
     }
 }
