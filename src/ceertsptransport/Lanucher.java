@@ -36,13 +36,18 @@ public class Lanucher {
     public static final int IPC_STATE = 2;
     public static final int IPC_CLEAR = 3;
 
-    public static final String logConfigPath = "/cee/picturecollect/main/logging.properties";
+    public static final String logConfigPath = "/ceertsptransport/logging.properties";
     public static final String launchFileName = "launchFile.lf";
 
     public static void main(String[] args) throws Exception {
 
+        LoggingConfiguration.load(logConfigPath);
+//        System.out.println("Link is innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+        logger.log(Level.INFO, "log Link is innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\n");
+//        logger.log(Level.INFO, "Link is ****/////////////******:" + System.getProperty("user.dir"));
         if (args != null && args.length > 0) {
-            int appState = getAppState();
+           int appState = getAppState();
+            logger.log(Level.INFO, "Link is ****/////////////******:" + System.getProperty("user.dir"));
             switch (args[0]) {
                 case ARG_STATE:
                     if (appState == STATE_RUNNING) {
@@ -66,12 +71,16 @@ public class Lanucher {
                     if (appState == STATE_STOP) {
 //                        IPCController ipc = new IPCController();
 //                        ipc.launch();
-                        CeeRTSPTransport crt = new CeeRTSPTransport();
-                        crt.transfer("", "");
+
+                        logger.info("The app is started111111111111111111111111111!\n");
+
+                        CeeRTSPTransportThread crt = new CeeRTSPTransportThread();
+                        crt.start();
 
                         GetPicture gp = new GetPicture();
                         gp.run();
-                        logger.log(Level.INFO, "The app is started!\n");
+
+                        logger.info("The app is started!\n");
                         appState = STATE_RUNNING;
                     } else {
                         logger.info("The app is running!");
@@ -84,8 +93,8 @@ public class Lanucher {
                         logger.info("The app is shutted!");
                         appState = STATE_STOP;
                     } else {
-                        CeeRTSPTransport crt = new CeeRTSPTransport();
-                        crt.killPid("", "");
+                        CeeRTSPTransportThread crt = new CeeRTSPTransportThread();
+                        crt.killPid();
                         logger.info("The app is already shut down!");
                     }
                     break;

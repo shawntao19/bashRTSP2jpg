@@ -5,6 +5,9 @@
  */
 package PictureDes;
 
+import static ceertsptransport.Lanucher.logger;
+import java.util.logging.Level;
+
 /**
  *
  * @author Xu Wentao
@@ -15,6 +18,7 @@ public class GetPicture implements Runnable {
     @Override
     public void run() {
         System.out.println("Link is **********:"+System.getProperty("user.dir"));
+        logger.log(Level.INFO, "GetPicture:" + System.getProperty("user.dir"));
     }
 
 }
