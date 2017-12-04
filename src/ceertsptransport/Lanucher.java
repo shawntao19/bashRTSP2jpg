@@ -5,7 +5,8 @@
  */
 package ceertsptransport;
 
-import PictureDes.GetPicture;
+import PictureDes.SendPicTestThread;
+import PictureDes.StorePicture;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -43,7 +44,7 @@ public class Lanucher {
 
         LoggingConfiguration.load(logConfigPath);
 //        System.out.println("Link is innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
-        logger.log(Level.INFO, "log Link is innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\n");
+//        logger.log(Level.INFO, "log Link is innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\n");
 //        logger.log(Level.INFO, "Link is ****/////////////******:" + System.getProperty("user.dir"));
         if (args != null && args.length > 0) {
             int appState = getAppState();
@@ -71,13 +72,15 @@ public class Lanucher {
                     if (appState == STATE_STOP) {
 //                        IPCController ipc = new IPCController();
 //                        ipc.launch();
-
+                        logger.info("1The app is started!\n");
                         CeeRTSPTransportThread crt = new CeeRTSPTransportThread();
                         crt.start();
-
-                        GetPicture gp = new GetPicture();
-                        gp.run();
-
+                        logger.info("2The app is started!\n");
+                        StorePicture gp = new StorePicture();
+                        gp.start();
+                        logger.info("3The app is started!\n");
+                        SendPicTestThread sptt = new SendPicTestThread();
+                        sptt.start();
                         logger.info("The app is started!\n");
 //                        Lanucher.writeState(Lanucher.STATE_RUNNING);
 //                        appState = STATE_RUNNING;

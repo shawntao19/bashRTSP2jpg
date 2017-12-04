@@ -107,13 +107,14 @@ public class QueueDemo {
 //    public static void main(String[] args) {
 //        QueueDemo demo = new QueueDemo(5);
 //        demo.EnQueue("aaa");
-//        demo.EnQueue("bbb");
-//        demo.EnQueue("ccc");
-//        demo.EnQueue("ddd");
+//        System.out.println(demo.queueLength());
+////        demo.EnQueue("bbb");
+////        demo.EnQueue("ccc");
+////        demo.EnQueue("ddd");
+//        System.out.println("***"+demo.DeQueue());
 ////        System.out.println("***"+demo.DeQueue());
-////        System.out.println("***"+demo.DeQueue());
-//        demo.EnQueue("ffff");
-//        demo.EnQueue("vvvv");
+////        demo.EnQueue("ffff");
+////        demo.EnQueue("vvvv");
 //        demo.queueTraverse();
 //    }
 }

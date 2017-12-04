@@ -15,15 +15,21 @@ import java.util.logging.Logger;
  * @date 2017-12-4 14:26:57
  */
 public class SendPic {
-    
+
     public static final Logger logger = Logger.getLogger(SendPic.class.getName());
-    
+
     public byte[] getPic() {
         QueueDemo qd = CountNum.queueDemoContainer.get("dataPic");
-        byte[] picDate = (byte[]) qd.DeQueue();
+        logger.info("进入获取图片等待");
+        if (qd.queueLength() > 0) {
+            byte[] picDate = (byte[]) qd.DeQueue();
 //        byte[] pic = null;
-        logger.info("***:size:" + picDate.length / 1024 + "kb,输出的新文件大小是");
-        return picDate;
+            logger.info("***:size:" + picDate.length / 1024 + "kb,输出的新文件大小是" + ",现在的队列里面一共有:" + qd.queueLength() + "个");
+            return picDate;
+        } else {
+            return null;
+        }
+
     }
-    
+
 }

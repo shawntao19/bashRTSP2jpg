@@ -5,6 +5,7 @@
  */
 package PictureDes;
 
+import Util.CountNum;
 import Util.FileDetail;
 import static ceertsptransport.Lanucher.logger;
 import java.io.DataInputStream;
@@ -25,14 +26,16 @@ import java.util.logging.Logger;
  * @author Xu Wentao
  * @date 2017-12-4 9:07:39
  */
-public class GetPicture extends Thread {
+public class StorePicture extends Thread {
 
-    public static final Logger logger = Logger.getLogger(GetPicture.class.getName());
+    public static final Logger logger = Logger.getLogger(StorePicture.class.getName());
 
     @Override
     public void run() {
-//        logger.log(Level.INFO, "GetPicture:" + System.getProperty("user.dir"));
+//        logger.log(Level.INFO, "StorePicture:" + System.getProperty("user.dir"));
 
+        QueueDemo demo = new QueueDemo(50);
+        CountNum.queueDemoContainer.put("dataPic", demo);
         File f = new File(System.getProperty("user.dir"));
         String picPath = f.getParent() + "/pic/";
 //        logger.log(Level.INFO, "picPath:" + picPath);
@@ -44,13 +47,15 @@ public class GetPicture extends Thread {
             String pathAName = picPath + fileName;
             File fPic = new File(pathAName);
             if (fPic.exists()) {
-                logger.log(Level.INFO, "2 已查找到图片:" + pathAName);
+//                logger.log(Level.INFO, "2 已查找到图片:" + pathAName);
                 byte[] fileData = null;
                 try {
                     fileData = FileDetail.toByteArray(pathAName);
-                    logger.log(Level.INFO, "3 已取到的图片编号为:" + countNameStart + ",图片的大小为:" + fileData.length / 1024 + "kb");
+                    //存入到 环形队列中
+                    demo.EnQueue(fileData);
+//                    logger.log(Level.INFO, "3 已取到的图片编号为:" + countNameStart + ",图片的大小为:" + fileData.length / 1024 + "kb" + ",此时的队列大小为:" + demo.queueLength());
                 } catch (IOException ex) {
-                    Logger.getLogger(GetPicture.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(StorePicture.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 countNameStart++;
             } else {
@@ -58,13 +63,13 @@ public class GetPicture extends Thread {
                 try {
                     this.sleep(10);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(GetPicture.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(StorePicture.class.getName()).log(Level.SEVERE, null, ex);
                 }
 //                logger.log(Level.INFO, "没有查找到图片,等待结束");
             }
             long endtime = System.currentTimeMillis();
             long costTime = (endtime - begintime);
-            logger.log(Level.INFO, "成功获取一次图片所消耗的时间costTime:" + costTime);
+//            logger.log(Level.INFO, "成功获取一次图片所消耗的时间costTime:" + costTime);
         }
     }
 
