@@ -21,6 +21,13 @@ public class FileDetail {
     public static String fileNameTail = ".jpg";
     public static int fileNameCount = 1;
 
+    /**
+     * 按照绝对路径 提取 文件到 二进制数组
+     *
+     * @param filename
+     * @return
+     * @throws IOException
+     */
     public static byte[] toByteArray(String filename) throws IOException {
 
         FileChannel fc = null;
@@ -28,7 +35,7 @@ public class FileDetail {
             fc = new RandomAccessFile(filename, "r").getChannel();
             MappedByteBuffer byteBuffer = fc.map(FileChannel.MapMode.READ_ONLY, 0,
                     fc.size()).load();
-            System.out.println(byteBuffer.isLoaded());
+//            System.out.println(byteBuffer.isLoaded());
             byte[] result = new byte[(int) fc.size()];
             if (byteBuffer.remaining() > 0) {
                 // System.out.println("remain");

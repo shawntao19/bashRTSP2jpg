@@ -29,7 +29,7 @@ public class CeeRTSPTransportThread extends Thread {
 
         dodoer = rtsp2jpg;
 
-        logger.info("此时的选取的链接为******" + dodoer + "\n type is ");
+        logger.info("此时的选取的链接为******" + dodoer + "\n  ");
 
         try {
             Runtime rt = Runtime.getRuntime();
