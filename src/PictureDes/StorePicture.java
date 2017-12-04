@@ -93,6 +93,7 @@ public class StorePicture extends Thread {
             }
         } else {
 //            System.out.println("删除单个文件失败：" + fileName + "不存在！");
+            
             return false;
         }
     }
