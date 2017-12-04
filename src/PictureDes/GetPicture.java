@@ -7,8 +7,18 @@ package PictureDes;
 
 import Util.FileDetail;
 import static ceertsptransport.Lanucher.logger;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileChannel.MapMode;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,6 +40,13 @@ public class GetPicture implements Runnable {
         File fPic = new File(pathAName);
         if (fPic.exists()) {
             logger.log(Level.INFO, "已查找到图片:" + pathAName);
+            byte[] fileData = null;
+            try {
+                fileData = FileDetail.toByteArray(pathAName);
+                logger.log(Level.INFO, "图片的大小为:" + fileData.length / 1024 + "kb");
+            } catch (IOException ex) {
+                Logger.getLogger(GetPicture.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             logger.log(Level.INFO, "没有查找到图片:" + pathAName);
         }
