@@ -5,6 +5,7 @@
  */
 package ceertsptransport;
 
+import PictureDes.GetPicture;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -67,18 +68,25 @@ public class Lanucher {
 //                        ipc.launch();
                         CeeRTSPTransport crt = new CeeRTSPTransport();
                         crt.transfer("", "");
-                        logger.log(Level.INFO, "启动程序成功\n");
+
+                        GetPicture gp = new GetPicture();
+                        gp.run();
+                        logger.log(Level.INFO, "The app is started!\n");
+                        appState = STATE_RUNNING;
                     } else {
                         logger.info("The app is running!");
                     }
                     break;
                 case ARG_STOP:
                     if (appState == STATE_RUNNING) {
-                        trigger(IPC_STOP);
+//                        trigger(IPC_STOP);
+
+                        logger.info("The app is shutted!");
+                        appState = STATE_STOP;
                     } else {
                         CeeRTSPTransport crt = new CeeRTSPTransport();
                         crt.killPid("", "");
-                        logger.info("程序关闭!");
+                        logger.info("The app is already shut down!");
                     }
                     break;
                 default:

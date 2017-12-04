@@ -26,7 +26,7 @@ public class CeeRTSPTransport {
         String dodoer = "";
 
         String rtsp2jpg = " ffmpeg -rtsp_transport tcp -i rtsp://c.itvitv.com/hkm3.ncsujdsuh -r 25 -f image2 /root/videoTest/testRtsp/pic/"
-                + "images%05d.jpg   ";
+                + "images%d.jpg   ";
 
         dodoer = rtsp2jpg;
 
